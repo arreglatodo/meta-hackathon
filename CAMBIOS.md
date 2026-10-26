@@ -12,6 +12,20 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 18:21 · El muestreo de cuadros del video pasa a un módulo compartido
+
+**Commit**: `a47cf79`
+
+Antes, la función que toma un cuadro cada 2 segundos del video vivía adentro de la página de
+cotización. Ahora está en `src/lib/client/frames.ts`, para que el chat también la use. La página
+de cotización funciona igual. Es el primer paso del botón para adjuntar un video en el chat:
+Máximo vio que el chat le pide un video y no hay forma de mandarlo.
+
+### Archivos clave
+- `src/lib/client/frames.ts`, `src/components/QuoteFlow.tsx`.
+
+**Pendiente**: el botón de adjuntar en el chat, y que el agente sepa cómo se manda el video.
+
 ## 2026-10-26 16:16 · La versión publicada daba 404: se declara Next.js en `vercel.json`
 
 **Commit**: `d746b9c`
