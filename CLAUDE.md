@@ -20,8 +20,8 @@ HomePlan, ArreglaTodo's project for the Meta Global AI Developer Hackathon (Oct 
   committing an encrypted file. Text from ArreglaTodo goes to a model only after redaction.
 - **Only work done during the hackathon counts, and it must be identifiable.** Never copy code
   from ArreglaTodo's private repos (CRM, quoting tool) into this one; rewrite what's needed.
-- Work before the kickoff (Oct 26, 12:00 PM ET) is tagged `pre-kickoff` and declared as existing
-  work in the README. Never change commit dates or re-commit old work as new.
+- Work before the kickoff (Oct 26, 12:00 PM ET) ends at commit `360f698` and is declared as
+  existing work in the README. Never change commit dates or re-commit old work as new.
 - Submission: 3-minute demo video, public repo (must open logged out), live product, by Nov 4,
   9:00 PM ET.
 - **The demo video drives the build.** `docs/DEMO-SCRIPT.md` is the script, block by block, with

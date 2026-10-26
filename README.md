@@ -55,15 +55,15 @@ change, and the git history backs it.
 
 **Before the kickoff** (Oct 26, 12:00 PM ET), on the morning of Oct 26, we explored the idea:
 the base scaffold, the first SAM 3.1 and Muse Spark probes on a real video, the people-blurring
-script and the data policy. That work is tagged [`pre-kickoff`](../../tree/pre-kickoff) and is
-listed here as existing work. Everything after that tag was built during the event.
+script and the data policy. That work ends at commit [`360f698`](https://github.com/arreglatodo/meta-hackathon/commit/360f698041a17cb265d0caa98c4136d3b8e24f0a)
+and is listed here as existing work. Everything after that commit was built during the event.
 
 | Existed before (not in this repo) | Built during the hackathon (this repo) |
 |---|---|
 | ArreglaTodo's marketplace operations, provider network and WhatsApp channel through Kapso | The HomePlan agent, its prompts and tools |
 | Our internal CRM, quoting tool and pricing rules (private) | Video → home profile → plan pipeline on SAM 3.1 + Muse Spark |
 | ArreglaTodo's operational history (private, see [data policy](docs/DATA-POLICY.md)) | The hours estimator and the pipeline that calibrates it on that history |
-| Morning of Oct 26, before kickoff (tag `pre-kickoff`): scaffold, video probes, blur script, data policy | Everything after the `pre-kickoff` tag |
+| Morning of Oct 26, before kickoff (up to commit `360f698`): scaffold, video probes, blur script, data policy | Everything after commit `360f698` |
 | | Before/after visit verification |
 | | Web chat simulator and agent trace view |
 
