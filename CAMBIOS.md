@@ -12,6 +12,51 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 13:40 · Primera versión para probar: cotización desde el video
+
+**Commit**: `e948fe8`
+
+Antes, HomePlan solo conversaba: el análisis del video existía como scripts de prueba, no en el
+producto. Ahora la página principal cotiza una limpieza a partir de un video, con el precio real
+por opción y por zona, y deja reservar por WhatsApp. Lo pidió Máximo: una primera versión en
+producción para ver cómo cotiza y cómo manda la cotización. La idea: que el cliente no tenga que
+dar todos los detalles (graba un video y ya tiene el precio), y que el prestador sepa qué va a
+encontrar antes de llegar.
+
+### Qué cambió
+- **El circuito**, en ~13 segundos (probado en el navegador con el video de prueba):
+  1. El cliente graba o elige un video y la zona (Montevideo o Ciudad de la Costa).
+  2. El navegador toma un cuadro cada 2 segundos (hasta 30, de 512 px). **El video no sale del
+     celular**, y lo que se manda pesa ~0,5 MB, adentro del límite de Vercel (4,5 MB).
+  3. Muse Spark arma el perfil de la casa: dormitorios, baños, cocina, living, balcones, pisos,
+     vidrios, desorden, suciedad, mascotas, tareas especiales y lo que no se vio.
+  4. El estimador parte de lo que reservan casas parecidas (la calibración privada) y le suma lo
+     que muestra el video: baños de más, muchos vidrios, desorden, suciedad, mascotas, balcón.
+     Mínimo 3 horas, horas enteras (como vende ArreglaTodo), dos personas si pasa de 8.
+  5. Los precios por visita, para las cuatro opciones (con o sin productos, con o sin
+     aspiradora), con el precio por hora.
+  6. El mensaje para el cliente, el resumen para el prestador (con los cuadros del video) y el
+     botón "Reservar por WhatsApp", con la cotización ya escrita.
+- **Precios**: la fórmula es la misma que usa la web de ArreglaTodo (`utils/tarifas.py` de
+  `web-app-platform`): precio por hora × horas + productos + aspiradora + gestión por tramos. La
+  fórmula es pública; los montos (la mediana de las tarifas activas por zona) y los tramos de la
+  gestión van en la configuración privada (`HOMEPLAN_PRICING`), nunca en el repo.
+- **Sin configuración privada, todo funciona con valores de ejemplo**, y la página lo avisa.
+- El chat pasó a `/chat`.
+- **`docs/PILOT.md`**: cómo validarlo con clientes reales (qué medir y en qué orden).
+
+### Archivos clave
+- `src/lib/home/`: `profile.ts`, `estimate.ts`, `pricing.ts`, `config.ts`, `quote.ts`.
+- `src/app/api/quote/route.ts`, `src/components/QuoteFlow.tsx`, `src/app/page.tsx`.
+- `docs/PILOT.md`, `STACK.md`, `docs/DEMO-SCRIPT.md`, `.env.example`.
+
+**Pendiente** (en Vercel, a mano: el conector de Vercel de esta sesión es de otra cuenta):
+- `MODEL_API_KEY`, `HOMEPLAN_HOURS_CALIBRATION`, `HOMEPLAN_PRICING` y
+  `NEXT_PUBLIC_BOOKING_WHATSAPP`, en Production y Preview. Los valores se le pasaron a Máximo
+  aparte.
+- Guardar cada cotización y la respuesta del prestador después de la visita.
+- Marcar las superficies con SAM 3.1 en la pantalla, los audios y WhatsApp.
+
 ## 2026-10-26 13:31 · El trabajo previo al kickoff se señala por commit, no por etiqueta
 
 **Commit**: `a03a624`
