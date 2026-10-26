@@ -12,6 +12,20 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 13:31 · El trabajo previo al kickoff se señala por commit, no por etiqueta
+
+**Commit**: `a03a624`
+
+Antes, el README y `CLAUDE.md` apuntaban a una etiqueta `pre-kickoff` que nunca llegó a GitHub:
+el entorno de trabajo rechaza subir etiquetas, y el link del README daba error. Ahora apuntan
+directo al commit `360f698`, el último anterior al kickoff, que es lo mismo y sí existe.
+
+### Archivos clave
+- `README.md`, `CLAUDE.md`.
+
+**Pendiente**: si se quiere la etiqueta igual, se crea a mano desde GitHub (Releases → nueva
+etiqueta `pre-kickoff` sobre `360f698`).
+
 ## 2026-10-26 13:30 · Guión del video y declaración de lo hecho antes del kickoff
 
 **Commit**: `1b6e9a8`
@@ -23,9 +37,9 @@ esa mañana. Ahora eso está declarado como trabajo previo, y hay un guión que 
 actualizando a medida que se construye el producto.
 
 ### Qué cambió
-- **Etiqueta `pre-kickoff`** en el commit `360f698`, el último anterior al kickoff. El README
-  lo dice, en su texto y en la tabla de "qué existía antes": todo lo posterior a la etiqueta es
-  trabajo del evento. **No se cambiaron fechas de commits ni se volvió a subir nada como
+- **El commit `360f698`** marca el fin de lo anterior al kickoff (iba a ser una etiqueta
+  `pre-kickoff`; ver la entrada de arriba). El README lo dice, en su texto y en la tabla de "qué
+  existía antes": todo lo posterior es trabajo del evento. **No se cambiaron fechas de commits ni se volvió a subir nada como
   nuevo**: hubiera sido presentar como hecho en el evento algo hecho antes, y las reglas
   descalifican por eso.
 - **`docs/DEMO-SCRIPT.md`**: el guión, en inglés para grabarlo con la voz de Máximo.
