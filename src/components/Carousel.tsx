@@ -68,9 +68,9 @@ export function Carousel({
                 💰 <strong>Total {money(base)}</strong> por visita
               </div>
               {withProducts && <div className="text-xs text-muted">Con productos: {money(withProducts)}</div>}
-              {frequency !== "once" && (
+              {frequency !== "once" && o.plans[frequency] && (
                 <div className="text-xs">
-                  Plan mensual: <strong>{money(base, base.total * visits)}</strong>
+                  Plan mensual: <strong>{money(base, o.plans[frequency]!.total)}</strong>
                 </div>
               )}
               {gift && <div className="text-xs font-medium text-[#128c7e]">🎁 Con el plan, {gift}</div>}

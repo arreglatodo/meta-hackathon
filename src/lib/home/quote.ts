@@ -2,7 +2,7 @@ import type { TraceStep } from "@/lib/agent/types";
 import { MODELS } from "@/lib/meta";
 import { hoursCalibration, pricingConfig, providers, type Provider } from "./config";
 import { estimateHours, type HoursEstimate } from "./estimate";
-import { priceOptions, type VisitPrice } from "./pricing";
+import { priceOptions, pricePlan, type PlanPrice, type VisitPrice } from "./pricing";
 import { extractHomeProfile, type HomeProfile } from "./profile";
 
 /** One card of the carousel: a real provider, priced with their own rate. */
@@ -17,6 +17,8 @@ export interface ProviderOption {
   gift?: Provider["gift"];
   /** Same hours for everyone; one price per products/vacuum combination. */
   prices: VisitPrice[];
+  /** Plans without products or vacuum: 4 weekly or 2 fortnightly visits a month. */
+  plans: { weekly: PlanPrice | null; biweekly: PlanPrice | null };
 }
 
 export interface Quote {
@@ -140,10 +142,17 @@ export async function quoteFromFrames(frames: string[], zone: string): Promise<Q
   const provs = providers();
   const providerOptions: ProviderOption[] = provs.value
     .filter((p) => p.rates[zoneName])
-    .map(({ rates, ...p }) => ({
-      ...p,
-      prices: priceOptions({ ...pricing.value, zones: { [zoneName]: rates[zoneName] } }, zoneName, estimate.hours),
-    }))
+    .map(({ rates, ...p }) => {
+      const cfg = { ...pricing.value, zones: { [zoneName]: rates[zoneName] } };
+      return {
+        ...p,
+        prices: priceOptions(cfg, zoneName, estimate.hours),
+        plans: {
+          weekly: pricePlan(cfg, zoneName, estimate.hours, 4),
+          biweekly: pricePlan(cfg, zoneName, estimate.hours, 2),
+        },
+      };
+    })
     .filter((p) => p.prices.length > 0)
     .sort((a, b) => a.prices[0].total - b.prices[0].total);
   trace.push({

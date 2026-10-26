@@ -56,3 +56,28 @@ export function priceOptions(cfg: PricingConfig, zone: string, hours: number) {
     .map(([p, v]) => priceVisit(cfg, zone, hours, p, v))
     .filter((x): x is VisitPrice => x !== null);
 }
+
+export interface PlanPrice {
+  visits: number;
+  hoursPerVisit: number;
+  service: number;
+  fee: number;
+  total: number;
+  /** Paid up front to confirm the dates (the rest at the end of the service). */
+  deposit: number;
+  currency: string;
+}
+
+/**
+ * A recurring plan is sold as one purchase: the management fee applies to the
+ * plan's whole service (as ArreglaTodo does: 2 × 4 h at the same rate →
+ * one fee bracket on the 8 hours), and half is paid up front.
+ */
+export function pricePlan(cfg: PricingConfig, zone: string, hoursPerVisit: number, visits: number, products = false, vacuum = false): PlanPrice | null {
+  const one = priceVisit(cfg, zone, hoursPerVisit, products, vacuum);
+  if (!one) return null;
+  const service = one.service * visits;
+  const fee = feeFor(service, cfg.feeBrackets);
+  const total = service + fee;
+  return { visits, hoursPerVisit, service, fee, total, deposit: Math.round(total / 2), currency: cfg.currency };
+}
