@@ -12,6 +12,49 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 19:25 · De punta a punta: del video al comprobante y el detalle de compra
+
+**Commit**: `59484db`
+
+Antes, el chat terminaba en el carrusel: elegir un prestador dejaba un link para que el equipo
+coordinara el día y el pago a mano. Ahora sigue todo el recorrido de ArreglaTodo, con sus mismos
+mensajes, hasta el "🧡 Detalle de tu compra". Lo pidió Máximo sobre un caso real de abono
+quincenal del 20/10. Ese día, a una persona del equipo le llevó 48 minutos y unos 45 mensajes
+llegar del primer mensaje al detalle de compra.
+
+### Qué cambió
+- **Precio del plan como lo cobra ArreglaTodo**: la gestión se calcula sobre el servicio de todo
+  el plan, no por visita. Con el mismo prestador, zona y horas del caso real (2 limpiezas de
+  4 horas), da exactamente lo mismo que la cotización de ese día: 4.880 + 1.191 = 6.071 pesos.
+- **Los pasos nuevos del chat**:
+  1. Día y hora, con botones ("Jueves a las 10:00", "Viernes a las 10:00", "Otro día u
+     horario"). Calcula las fechas de todo el plan (cada semana o cada 2 semanas).
+  2. Confirmación del prestador. **En el prototipo está simulada**: falta decidir cómo
+     confirma de verdad.
+  3. "📍 ¿Cuál es tu dirección exacta…?" con el texto de ArreglaTodo.
+  4. Formas de pago (transferencia, Abitab/RedPagos, MercadoPago con el 9,3%).
+  5. Los datos de transferencia con el 50% para confirmar y el resto al terminar, y
+     "⏳ Coordinación en pausa: Enviar comprobante…".
+  6. **El comprobante, en imagen o PDF** (como lo mandan los clientes). Muse Spark lee monto,
+     banco, beneficiario, fecha y número de operación, y lo compara con lo que había que
+     pagar. Si no cierra (otro monto, otro beneficiario o no se lee), le dice al cliente que lo
+     revisa el equipo.
+  7. "🧡 Detalle de tu compra - Pago Parcial", con el formato de ArreglaTodo.
+- Los datos de la transferencia y el beneficiario que se exige salen de configuración
+  (`NEXT_PUBLIC_TRANSFER_TEXT`, `HOMEPLAN_BENEFICIARY`), no del código.
+- Con esto se grabó el video interno completo, de 57 segundos, con una conversación real del
+  prototipo. La dirección y el comprobante son de ejemplo y no están los datos de la clienta. El
+  video no está en el repo.
+
+### Archivos clave
+- `src/components/ChatSimulator.tsx`, `src/lib/home/pricing.ts` (`pricePlan`),
+  `src/lib/home/receipt.ts`, `src/app/api/receipt/route.ts`, `src/components/Carousel.tsx`.
+
+**Pendiente**:
+- Que el prestador confirme de verdad (decisión abierta) y que la reserva se cargue en la base de
+  ArreglaTodo (endpoint del CRM, pendiente de OK).
+- En Vercel: `NEXT_PUBLIC_TRANSFER_TEXT` y `HOMEPLAN_BENEFICIARY`.
+
 ## 2026-10-26 18:55 · Frecuencia con botones y carrusel con los prestadores de ArreglaTodo
 
 **Commit**: `c9cc58d`
