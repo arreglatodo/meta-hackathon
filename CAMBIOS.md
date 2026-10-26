@@ -12,6 +12,45 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 18:55 · Frecuencia con botones y carrusel con los prestadores de ArreglaTodo
+
+**Commit**: `c9cc58d`
+
+Antes, después del video el chat mandaba una lista de precios armada con la mediana de la zona,
+sin prestadores. Ahora sigue el recorrido de ArreglaTodo: resume la casa y las horas, pregunta
+**cada cuánto** con botones, y manda el **carrusel** con los prestadores que tienen tarifa en
+esa zona, cada uno con **su propio precio**. Es lo que Máximo pidió para el video interno del
+equipo: la demo tal cual se vería en ArreglaTodo.
+
+### Qué cambió
+- **Después del video**: "Vimos tu casa…", las horas con el porqué, lo que no se vio de la casa
+  y "¿Cada cuánto la necesitás?" con tres botones (una vez, cada semana, cada 2 semanas).
+- **El carrusel**: el texto de presentación es el del CRM (dinero protegido, leyes sociales y
+  boletos incluidos). Una tarjeta por prestador, con trabajos, reseñas, horas, precio por
+  visita, precio con productos, plan mensual (4 visitas semanales o 2 quincenales), el regalo si
+  el prestador tiene uno para esa frecuencia, "Ver reseñas" (su perfil) y "Elegir".
+- **Cada precio sale de la tarifa del prestador** con la fórmula de ArreglaTodo (precio por hora,
+  productos, aspiradora y gestión por tramos).
+- **"Elegir"** confirma la elección y deja el link para coordinar el día y el pago con el equipo.
+- **Los prestadores reales no están en el repo**: salen de la configuración privada
+  `HOMEPLAN_PROVIDERS`. Sin ella se ven prestadores de ejemplo.
+- `/chat?telefono` muestra solo el chat, a pantalla completa, para grabar.
+- El agente pide el video de entrada, sin preguntar ambientes ni frecuencia. La lista de "no
+  llegamos a ver" habla de partes de la casa, no del video (antes decía cosas como "cuadros
+  negros").
+- Con esto se grabó el video interno de 30 s para el equipo de ArreglaTodo, con una
+  conversación real. El video no está en el repo.
+
+### Archivos clave
+- `src/components/Carousel.tsx`, `src/components/ChatSimulator.tsx`, `src/lib/home/quote.ts`,
+  `src/lib/home/config.ts`, `src/lib/agent/prompt.ts`, `src/lib/home/profile.ts`.
+
+**Pendiente**:
+- Cargar `HOMEPLAN_PROVIDERS` en Vercel para que la versión publicada muestre los prestadores
+  reales (el valor se le pasó a Máximo aparte).
+- Fotos de los prestadores en las tarjetas (hoy van las iniciales).
+- Día, hora, pago y detalle de compra: ver el plan de punta a punta.
+
 ## 2026-10-26 18:26 · El chat ya deja mandar el video y cotiza ahí mismo
 
 **Commit**: `bb30aa9`
