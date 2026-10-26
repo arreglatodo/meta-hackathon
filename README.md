@@ -49,15 +49,21 @@ See [`STACK.md`](STACK.md) for the full stack and the reasons behind each choice
 
 ## What existed before the hackathon vs. what we built during it
 
-The hackathon rules require new work to be clearly identified. **Everything in this repository
-was written during the hackathon**, starting Oct 26, 2026. [`CAMBIOS.md`](CAMBIOS.md) is a dated
-log of every change, and the git history backs it.
+The hackathon rules require new work to be clearly identified. Everything in this repository
+was written on or after Oct 26, 2026. [`CAMBIOS.md`](CAMBIOS.md) is a dated log of every
+change, and the git history backs it.
+
+**Before the kickoff** (Oct 26, 12:00 PM ET), on the morning of Oct 26, we explored the idea:
+the base scaffold, the first SAM 3.1 and Muse Spark probes on a real video, the people-blurring
+script and the data policy. That work is tagged [`pre-kickoff`](../../tree/pre-kickoff) and is
+listed here as existing work. Everything after that tag was built during the event.
 
 | Existed before (not in this repo) | Built during the hackathon (this repo) |
 |---|---|
 | ArreglaTodo's marketplace operations, provider network and WhatsApp channel through Kapso | The HomePlan agent, its prompts and tools |
 | Our internal CRM, quoting tool and pricing rules (private) | Video → home profile → plan pipeline on SAM 3.1 + Muse Spark |
 | ArreglaTodo's operational history (private, see [data policy](docs/DATA-POLICY.md)) | The hours estimator and the pipeline that calibrates it on that history |
+| Morning of Oct 26, before kickoff (tag `pre-kickoff`): scaffold, video probes, blur script, data policy | Everything after the `pre-kickoff` tag |
 | | Before/after visit verification |
 | | Web chat simulator and agent trace view |
 
