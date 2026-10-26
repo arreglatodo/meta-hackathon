@@ -50,3 +50,20 @@ listed what it could not see (laundry area, inside cabinets, a dark bedroom).
 - WhatsApp's compression (464×624) was enough for both models; we don't need the original file
   from the glasses.
 - Next probe: SAM on still before/after photos of the same surface.
+
+## Follow-up: anonymizing the footage with SAM 3.1
+
+To use this walkthrough in the public demo, we blurred the two people at the dining table and
+dropped the audio, using SAM 3.1 itself (`scripts/sam-boxes.mjs` with the concept `person`,
+then `scripts/blur-boxes.py`).
+
+- **A full 62 s / 1,872-frame request returned `502 upstream request failed`** twice, while
+  10-second chunks of 300 frames worked, even though the documented limit is 15,000 frames.
+  `sam-boxes.mjs` now splits long videos into frame-exact chunks and runs them in parallel:
+  7 chunks in ~32 s.
+- SAM flagged people in 442 of 1,872 frames: the two people at the table (23.7–31.5 s) and a few
+  short hits on clothes hanging in the bathroom. Blurring all of them is the safe default.
+- Checked one frame per second by eye: nobody left uncovered.
+- Cost: about $0.37 at $0.20 per 1,000 frames.
+- This is a product feature, not just demo prep: HomePlan can blur people in every customer
+  video before storing it.

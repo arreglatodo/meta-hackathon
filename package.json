@@ -10,7 +10,9 @@
     "typecheck": "tsc --noEmit",
     "smoke": "NODE_USE_ENV_PROXY=1 node scripts/smoke.mjs",
     "probe:sam": "NODE_USE_ENV_PROXY=1 node scripts/probe-sam.mjs",
-    "probe:spark": "NODE_USE_ENV_PROXY=1 node scripts/probe-spark-video.mjs"
+    "probe:spark": "NODE_USE_ENV_PROXY=1 node scripts/probe-spark-video.mjs",
+    "sam:boxes": "NODE_USE_ENV_PROXY=1 node scripts/sam-boxes.mjs",
+    "blur": "python3 scripts/blur-boxes.py"
   },
   "dependencies": {
     "next": "15.5.28",
