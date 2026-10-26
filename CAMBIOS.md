@@ -12,6 +12,21 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 16:16 · La versión publicada daba 404: se declara Next.js en `vercel.json`
+
+**Commit**: `d746b9c`
+
+Antes, `meta-hackathon-five.vercel.app` respondía "NOT_FOUND" en todas las rutas, aunque los
+deploys de `main` terminaban bien. El proyecto de Vercel se creó cuando el repo tenía solo el
+README, así que quedó configurado como sitio estático: no construía la app. Ahora `vercel.json`
+declara que es Next.js y con qué comandos se instala y construye; eso manda sobre lo que quedó
+guardado en el proyecto.
+
+### Archivos clave
+- `vercel.json`.
+
+**Pendiente**: confirmar que la página y `/api/quote` respondan después de este deploy.
+
 ## 2026-10-26 13:40 · Primera versión para probar: cotización desde el video
 
 **Commit**: `e948fe8`
