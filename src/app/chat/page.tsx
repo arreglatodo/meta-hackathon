@@ -1,6 +1,8 @@
 import { ChatSimulator } from "@/components/ChatSimulator";
 
-export default function ChatPage() {
+export default async function ChatPage({ searchParams }: { searchParams: Promise<{ telefono?: string }> }) {
+  const { telefono } = await searchParams;
+  if (telefono !== undefined) return <ChatSimulator phone />;
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-4 px-4 py-6">
       <header>

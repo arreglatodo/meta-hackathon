@@ -11,6 +11,7 @@ built for the Meta Global AI Developer Hackathon. The code is public, as the rul
 | All HomePlan code: agent, prompts, video pipeline, estimator code, training scripts | ArreglaTodo's historical requests, quotes, jobs and chats |
 | The estimator's *shape*: which features it uses and how it combines them | The estimator's *calibration*: the numbers learned from ArreglaTodo's history |
 | A synthetic demo calibration, so anyone can clone and run HomePlan | Prices, commission rules and provider rates |
+| | The providers offered in the carousel (names, rates, reviews, jobs), loaded server-side from private configuration |
 | Aggregate evaluation results (number of examples, error in hours) | Any row-level data, even anonymized |
 | Synthetic or anonymized demo media (people blurred, audio removed) | Raw customer videos and photos |
 

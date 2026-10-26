@@ -5,6 +5,8 @@
  *   ArreglaTodo's database (calibration/hours.sql). Private: see
  *   docs/DATA-POLICY.md.
  * - HOMEPLAN_PRICING: rates per zone and the management fee brackets. Private.
+ * - HOMEPLAN_PROVIDERS: the cleaning providers offered in the carousel, with
+ *   their own rates per zone. Private.
  *
  * Without them, HomePlan runs on the DEMO values below, which are synthetic
  * and labeled as such in every quote.
@@ -35,6 +37,25 @@ export interface PricingConfig {
   /** [upper bound (exclusive) or null for the rest, rate] */
   feeBrackets: [number | null, number][];
 }
+
+export interface Provider {
+  name: string;
+  company?: string | null;
+  rating?: number;
+  reviews?: number;
+  jobs?: number;
+  profileUrl?: string;
+  photoUrl?: string;
+  /** Optional gift for a given frequency, shown on the card. */
+  gift?: { frequency: "once" | "weekly" | "biweekly"; text: string };
+  rates: Record<string, ZoneRate>;
+}
+
+const DEMO_PROVIDERS: Provider[] = [
+  { name: "Ana (demo)", reviews: 32, jobs: 210, rates: { Demo: { hourly: 14 } } },
+  { name: "Brillo SAS (demo)", reviews: 18, jobs: 95, rates: { Demo: { hourly: 16, products: { amount: 2, per: "hour" } } } },
+  { name: "Lucía (demo)", reviews: 51, jobs: 640, rates: { Demo: { hourly: 18, vacuum: { amount: 10, per: "visit" } } } },
+];
 
 const DEMO_CALIBRATION: HoursCalibration = {
   version: "demo",
@@ -75,4 +96,9 @@ export function hoursCalibration(): { value: HoursCalibration; demo: boolean } {
 export function pricingConfig(): { value: PricingConfig; demo: boolean } {
   const v = readJson<PricingConfig>("HOMEPLAN_PRICING");
   return v ? { value: v, demo: false } : { value: DEMO_PRICING, demo: true };
+}
+
+export function providers(): { value: Provider[]; demo: boolean } {
+  const v = readJson<Provider[]>("HOMEPLAN_PROVIDERS");
+  return v ? { value: v, demo: false } : { value: DEMO_PROVIDERS, demo: true };
 }

@@ -1,18 +1,35 @@
 import type { TraceStep } from "@/lib/agent/types";
 import { MODELS } from "@/lib/meta";
-import { hoursCalibration, pricingConfig } from "./config";
+import { hoursCalibration, pricingConfig, providers, type Provider } from "./config";
 import { estimateHours, type HoursEstimate } from "./estimate";
 import { priceOptions, type VisitPrice } from "./pricing";
 import { extractHomeProfile, type HomeProfile } from "./profile";
+
+/** One card of the carousel: a real provider, priced with their own rate. */
+export interface ProviderOption {
+  name: string;
+  company?: string | null;
+  rating?: number;
+  reviews?: number;
+  jobs?: number;
+  profileUrl?: string;
+  photoUrl?: string;
+  gift?: Provider["gift"];
+  /** Same hours for everyone; one price per products/vacuum combination. */
+  prices: VisitPrice[];
+}
 
 export interface Quote {
   profile: HomeProfile;
   estimate: HoursEstimate;
   zone: string;
   options: VisitPrice[];
+  providerOptions: ProviderOption[];
+  /** What we saw and the hours, without prices: the chat asks frequency next. */
+  summaryMessage: string;
   customerMessage: string;
   providerBrief: string;
-  demo: { calibration: boolean; pricing: boolean };
+  demo: { calibration: boolean; pricing: boolean; providers: boolean };
   trace: TraceStep[];
 }
 
@@ -54,6 +71,18 @@ function customerMessage(p: HomeProfile, e: HoursEstimate, options: VisitPrice[]
     "¿Cada cuánto? Una vez, cada semana o cada 2 semanas: con el plan te queda siempre la misma persona.",
   ];
   if (p.uncertain.length) lines.push("", `No llegamos a ver: ${p.uncertain.join(", ")}.`);
+  return lines.join("\n");
+}
+
+function summaryMessage(p: HomeProfile, e: HoursEstimate) {
+  const lines = [
+    `¡Listo! Vimos tu casa: ${rooms(p)}.`,
+    "",
+    `Te recomendamos *${e.hours} horas* por visita${e.cleaners === 2 ? " (van dos personas)" : ""}:`,
+    ...e.reasons.map((r) => `• ${r}`),
+  ];
+  if (p.uncertain.length) lines.push("", `No llegamos a ver: ${p.uncertain.join(", ")}.`);
+  lines.push("", "¿Cada cuánto la necesitás?");
   return lines.join("\n");
 }
 
@@ -107,14 +136,34 @@ export async function quoteFromFrames(frames: string[], zone: string): Promise<Q
     ms: Date.now() - t,
   });
 
+  t = Date.now();
+  const provs = providers();
+  const providerOptions: ProviderOption[] = provs.value
+    .filter((p) => p.rates[zoneName])
+    .map(({ rates, ...p }) => ({
+      ...p,
+      prices: priceOptions({ ...pricing.value, zones: { [zoneName]: rates[zoneName] } }, zoneName, estimate.hours),
+    }))
+    .filter((p) => p.prices.length > 0)
+    .sort((a, b) => a.prices[0].total - b.prices[0].total);
+  trace.push({
+    kind: "tool",
+    name: "match_providers",
+    input: `${zoneName}, ${estimate.hours} h, providers ${provs.demo ? "DEMO" : "private"}`,
+    output: providerOptions.map((p) => `${p.name} ${p.prices[0].total}`).join(" · ") || "none",
+    ms: Date.now() - t,
+  });
+
   return {
     profile,
     estimate,
     zone: zoneName,
     options,
+    providerOptions,
+    summaryMessage: summaryMessage(profile, estimate),
     customerMessage: customerMessage(profile, estimate, options),
     providerBrief: providerBrief(profile, estimate),
-    demo: { calibration: cal.demo, pricing: pricing.demo },
+    demo: { calibration: cal.demo, pricing: pricing.demo, providers: provs.demo },
     trace,
   };
 }

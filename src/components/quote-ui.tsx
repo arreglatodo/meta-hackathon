@@ -20,14 +20,15 @@ export function optionLabel(o: VisitPrice) {
 }
 
 /** The message the booking WhatsApp receives, so the team books as usual. */
-export function bookingText(o: VisitPrice, frequency: Frequency) {
+export function bookingText(o: VisitPrice, frequency: Frequency, provider?: string) {
   const freq = FREQUENCIES.find((f) => f.id === frequency)!.label.toLowerCase();
-  return `Hola! Quiero reservar una limpieza con HomePlan: ${o.hours} horas, ${optionLabel(o).toLowerCase()}, ${freq}, en ${o.zone}. Precio por visita: ${money(o)}.`;
+  const who = provider ? ` con ${provider}` : "";
+  return `Hola! Quiero reservar una limpieza${who} con HomePlan: ${o.hours} horas, ${optionLabel(o).toLowerCase()}, ${freq}, en ${o.zone}. Precio por visita: ${money(o)}.`;
 }
 
-export function bookingHref(o: VisitPrice, frequency: Frequency) {
+export function bookingHref(o: VisitPrice, frequency: Frequency, provider?: string) {
   return BOOKING_WHATSAPP
-    ? `https://wa.me/${BOOKING_WHATSAPP}?text=${encodeURIComponent(bookingText(o, frequency))}`
+    ? `https://wa.me/${BOOKING_WHATSAPP}?text=${encodeURIComponent(bookingText(o, frequency, provider))}`
     : null;
 }
 

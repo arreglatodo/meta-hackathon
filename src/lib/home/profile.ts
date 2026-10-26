@@ -37,7 +37,7 @@ Return ONLY JSON:
   "dirt": "light|normal|heavy",
   "petsVisible": true|false,
   "specialTasks": ["short Spanish phrases, e.g. 'ventanal corredizo grande', 'vajilla acumulada'"],
-  "uncertain": ["short Spanish phrases: what you could not see well"],
+  "uncertain": ["short Spanish phrases: AREAS OF THE HOME you could not see, e.g. 'el lavadero', 'adentro de los placares'. Never comment on the video itself (blur, dark or black frames)."],
   "providerBrief": "3-4 short sentences in Rioplatense Spanish for the cleaner: what they will find, what takes time, what to bring"
 }`;
 
