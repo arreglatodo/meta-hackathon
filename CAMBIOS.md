@@ -12,6 +12,35 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 12:47 · Borroneo automático de personas en los videos, con SAM 3.1
+
+**Commit**: `bc2d421`
+
+Antes, el video de prueba mostraba a dos personas en la mesa del comedor y tenía audio, así que
+no se podía usar en la demo pública. Ahora hay una herramienta que encuentra las personas cuadro
+por cuadro con SAM 3.1, las borronea y saca el audio. Lo pidió Máximo para la demo, y sirve
+también como función del producto: HomePlan puede borronear a la gente de cada video de
+cliente antes de guardarlo.
+
+### Qué cambió
+- **SAM falló con el video entero** (62 segundos, 1.872 cuadros: error 502 dos veces), aunque
+  la documentación dice que acepta hasta 15.000 cuadros. Con tramos de 10 segundos funciona: la
+  herramienta parte el video, procesa los tramos en paralelo y los vuelve a unir. Tarda ~32 s.
+- Detectó personas en 442 cuadros: las dos de la mesa (de 23,7 a 31,5 s) y algunos aciertos
+  falsos sobre ropa colgada en el baño. Se borronea todo lo que marca, por las dudas.
+- Revisado a ojo, un cuadro por segundo: no quedó nadie sin borronear.
+- Costo: unos US$0,37.
+- El video borroneado **no está en el repo**: se le pasó a Máximo aparte.
+
+### Archivos clave
+- `scripts/sam-boxes.mjs` (`pnpm sam:boxes <video> <concepto> <salida.json>`).
+- `scripts/blur-boxes.py` (`pnpm blur <video> <cajas.json> <salida.mp4>`).
+- `docs/probes/2026-10-26-first-video.md`: sección "Follow-up".
+
+**Pendiente**:
+- Pasar el borroneo al circuito real, para que corra solo con cada video que llega.
+- Avisar en `#office-hours` del Discord de Meta que SAM da 502 con videos de ~1.900 cuadros.
+
 ## 2026-10-26 12:34 · Primera prueba con un video real: Muse Spark inventaría, SAM no cuenta
 
 **Commit**: `8fea08c`
