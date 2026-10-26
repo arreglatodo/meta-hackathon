@@ -2,38 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Quote } from "@/lib/home/quote";
-import type { VisitPrice } from "@/lib/home/pricing";
 import { sampleFrames } from "@/lib/client/frames";
-
-const FREQUENCIES = [
-  { id: "once", label: "Una vez" },
-  { id: "weekly", label: "Cada semana" },
-  { id: "biweekly", label: "Cada 2 semanas" },
-] as const;
-type Frequency = (typeof FREQUENCIES)[number]["id"];
-
-const BOOKING_WHATSAPP = process.env.NEXT_PUBLIC_BOOKING_WHATSAPP;
-
-const money = (o: VisitPrice, n = o.total) =>
-  `${o.currency === "UYU" ? "$" : o.currency + " "}${n.toLocaleString("es-UY")}`;
-
-function optionLabel(o: VisitPrice) {
-  if (o.products && o.vacuum) return "Con productos y aspiradora";
-  if (o.products) return "Con productos";
-  if (o.vacuum) return "Con aspiradora";
-  return "Vos ponés los productos";
-}
-
-/** Renders WhatsApp-style *bold*. */
-function WhatsAppText({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(/(\*[^*]+\*)/g).map((part, i) =>
-        part.startsWith("*") && part.endsWith("*") ? <strong key={i}>{part.slice(1, -1)}</strong> : part,
-      )}
-    </>
-  );
-}
+import {
+  bookingHref,
+  bookingText,
+  FREQUENCIES,
+  type Frequency,
+  money,
+  optionLabel,
+  WhatsAppText,
+} from "./quote-ui";
 
 export function QuoteFlow() {
   const [zones, setZones] = useState<string[]>([]);
@@ -88,10 +66,8 @@ export function QuoteFlow() {
   }
 
   const chosen = quote?.options[option];
-  const freqLabel = FREQUENCIES.find((f) => f.id === frequency)!.label;
-  const bookingText = chosen
-    ? `Hola! Quiero reservar una limpieza con HomePlan: ${chosen.hours} horas, ${optionLabel(chosen).toLowerCase()}, ${freqLabel.toLowerCase()}, en ${chosen.zone}. Precio por visita: ${money(chosen)}.`
-    : "";
+  const booking = chosen ? bookingText(chosen, frequency) : "";
+  const href = chosen ? bookingHref(chosen, frequency) : null;
 
   return (
     <div className="flex flex-col gap-4">
@@ -178,9 +154,9 @@ export function QuoteFlow() {
                 </button>
               ))}
             </div>
-            {BOOKING_WHATSAPP ? (
+            {href ? (
               <a
-                href={`https://wa.me/${BOOKING_WHATSAPP}?text=${encodeURIComponent(bookingText)}`}
+                href={href}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-4 inline-block rounded-full bg-[#25d366] px-5 py-2.5 text-sm font-semibold text-white"
@@ -188,7 +164,7 @@ export function QuoteFlow() {
                 Reservar por WhatsApp
               </a>
             ) : (
-              <p className="mt-4 text-sm text-muted">{bookingText}</p>
+              <p className="mt-4 text-sm text-muted">{booking}</p>
             )}
           </section>
 
