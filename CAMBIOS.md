@@ -12,6 +12,40 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 12:34 · Primera prueba con un video real: Muse Spark inventaría, SAM no cuenta
+
+**Commit**: `8fea08c`
+
+Antes no sabíamos si el video servía para cotizar. Era el riesgo principal del plan, y la idea
+original era que SAM 3.1 contara ambientes y artefactos. Ahora está probado con un video real de
+62 segundos de un apartamento, **grabado con lentes Meta Ray-Ban Gen 3 Wayfarer** y mandado por
+WhatsApp (es exactamente el camino que haría un cliente). El resultado cambia el diseño:
+
+- **SAM 3.1 no sirve para contar.** Al recorrer la casa, el mismo objeto sale y vuelve a entrar
+  en cuadro y SAM lo toma como otro: devolvió 4 sofás (hay 1 o 2), 2 camas (hay 1), 16 puertas,
+  y no vio la pileta del baño. El inodoro y la pileta de la cocina sí los vio bien.
+- **Muse Spark 1.3 armó el inventario correcto** mirando el mismo video: escritorio, pasillo,
+  living con balcón, comedor, cocina, dormitorio y baño, sin contar dos veces, con tipo de piso,
+  vidrios, desorden, tareas especiales y lo que no pudo ver. Tardó 20 segundos.
+- **Nuevo reparto**: Muse Spark arma el inventario; SAM marca en la imagen las superficies que
+  llevan tiempo (vidrios, pisos, mesadas, baño) y compara antes y después de cada visita.
+- **Tiempo**: 7 pedidos a SAM en paralelo, más la subida, tardan 20 segundos. Todo entra en una
+  función de Vercel de 60 s: **no hace falta Modal para esto**.
+- El README ahora dice a quién va dirigido: cualquiera con smartphone y WhatsApp, con los Meta
+  Ray-Ban como versión manos libres (el cliente recorre la casa, el prestador muestra el
+  trabajo), y Uruguay como mercado de validación de un producto que sirve en cualquier mercado
+  que vive en WhatsApp.
+
+### Archivos clave
+- `docs/probes/2026-10-26-first-video.md`: el informe de la prueba, con la tabla de SAM.
+- `scripts/probe-sam.mjs`, `scripts/probe-spark-video.mjs` (`pnpm probe:sam`, `pnpm probe:spark`).
+- `README.md`: secciones "The problem" y "Who it's for".
+
+**Pendiente**:
+- El video no está en el repo (muestra una casa real y a dos personas). Para la demo pública hay
+  que grabar otro sin personas, o borronearlas.
+- Próxima prueba: SAM con fotos de antes y después de la misma superficie.
+
 ## 2026-10-26 11:49 · Base del proyecto: Next.js, cliente de Meta y simulador de chat
 
 **Commit**: `603acb8`
