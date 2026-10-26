@@ -24,22 +24,43 @@ the repo, behind access control.
 
 ## How the hours estimator uses ArreglaTodo's history
 
-The model never invents hours or prices. Hours come from an estimator calibrated on real jobs:
+The model never invents hours or prices. Hours come from an estimator calibrated on more than a
+thousand real ArreglaTodo cleaning jobs, and **the raw data never leaves ArreglaTodo's
+database**:
 
-1. **Extraction (offline, run by the team).** A script reads ArreglaTodo's cleaning requests and
-   quotes with read-only access and keeps only non-identifying features: number of bedrooms,
-   bathrooms and other rooms, frequency, extras, and the hours actually quoted. Names, phones,
-   addresses, free text and prices are dropped before anything is written. Text is redacted
-   before any model sees it.
-2. **Storage.** The resulting feature table lives in HomePlan's private database (Supabase,
-   row-level security on, no public access). It is never exported to the repo.
-3. **Calibration.** The estimator is fitted on that table. Its parameters are stored privately and
-   loaded server-side at runtime; they never reach the browser or the repo.
-4. **Demo mode.** Without access to the private calibration, HomePlan runs on the synthetic one
-   in this repo, clearly labeled as such.
+1. **Extraction and aggregation happen inside ArreglaTodo's database.**
+   [`calibration/hours.sql`](../calibration/hours.sql) runs read-only there. It reads only
+   qualitative features from each job (bedrooms, bathrooms, rooms, hours, with or without
+   products, with or without vacuum) and returns **one JSON of aggregates**: median and range of
+   hours per home profile, counting only groups of at least 20 jobs, plus a held-out evaluation.
+   No row, free text, id, name, phone, address or price comes out.
+2. **No customer text goes to any model for calibration.** The rules in the SQL are enough.
+   If we ever use Muse Spark to read job descriptions, it will only receive text with names,
+   addresses, phones and any other customer data removed, and it will only return qualitative
+   features.
+3. **Private storage.** The calibration is stored in HomePlan's private database (a schema not
+   exposed by its API, row-level security on). It is loaded server-side at runtime and never
+   reaches the browser or the repo.
+4. **Demo mode.** Without access to the private calibration, HomePlan runs on a synthetic one in
+   this repo, clearly labeled as such.
 
-At the time of writing, more than a thousand of ArreglaTodo's cleaning jobs describe both the
-home and the hours.
+## How HomePlan uses this without exposing anything
+
+HomePlan, the product, only ever sees the **aggregate calibration**: "homes with this profile
+book between X and Y hours", learned from groups of 20 or more jobs. Nobody outside ArreglaTodo
+sees anything else:
+
+| Who | What they see |
+|---|---|
+| A customer on WhatsApp | Their own plan: the hours and price for *their* home, with the reasons. Never other people's jobs. |
+| A judge or developer cloning the repo | All the code, including the SQL that computes the calibration, and a synthetic calibration to run it. |
+| HomePlan's server | The private aggregate calibration, loaded at runtime. |
+| ArreglaTodo's database | The only place where job-level data exists. |
+
+Because each number in the calibration summarizes at least 20 jobs, it cannot be traced back to
+a single customer. The same design lets any other home-services company plug in its own
+history: run the same SQL against its own database and HomePlan works with its calibration,
+without either company seeing the other's data.
 
 ## Rights
 

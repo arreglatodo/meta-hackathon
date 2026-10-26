@@ -38,7 +38,8 @@ pasa por ArreglaTodo es información privilegiada.
   2. Esos datos se guardan en el Supabase privado de HomePlan.
   3. El estimador se calibra ahí, y la app carga la calibración solo del lado del servidor.
 - **Cuánta data hay**: más de mil trabajos de limpieza describen la casa y las horas (consulta
-  de solo conteos sobre `arreglatodo-db`, 26/10).
+  de solo conteos sobre `arreglatodo-db`, 26/10). *Corregido el 26/10 a las 13:10*: esta
+  entrada daba las cifras exactas, y Máximo pidió redondearlas porque el repo es público.
 - `README.md` (sección "Data and privacy") y `CLAUDE.md` (regla para cualquier agente) apuntan a
   la política.
 
@@ -48,8 +49,6 @@ pasa por ArreglaTodo es información privilegiada.
 **Pendiente**:
 - La política dice que ArreglaTodo autoriza el uso de su historia: conviene que quede firmado
   por los dos socios (Máximo y Lorenzo), aunque sea un mail.
-- Decidir si se puede mostrar en público cuántos trabajos hay detrás del estimador (hoy la
-  política da números aproximados).
 - Armar el script de extracción y la calibración.
 
 ## 2026-10-26 12:47 · Borroneo automático de personas en los videos, con SAM 3.1
