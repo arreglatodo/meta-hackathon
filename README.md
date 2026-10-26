@@ -57,10 +57,18 @@ log of every change, and the git history backs it.
 |---|---|
 | ArreglaTodo's marketplace operations, provider network and WhatsApp channel through Kapso | The HomePlan agent, its prompts and tools |
 | Our internal CRM, quoting tool and pricing rules (private) | Video → home profile → plan pipeline on SAM 3.1 + Muse Spark |
+| ArreglaTodo's operational history (private, see [data policy](docs/DATA-POLICY.md)) | The hours estimator and the pipeline that calibrates it on that history |
 | | Before/after visit verification |
 | | Web chat simulator and agent trace view |
 
 No customer data, provider data or real prices are in this repo. Demo data is synthetic.
+
+## Data and privacy
+
+HomePlan is a spin-off of ArreglaTodo. Its hours estimator is calibrated on ArreglaTodo's real
+cleaning jobs, but that history and the calibration learned from it stay private: the code is
+open, the data is not, like an open-source model with private weights. Anyone can clone the repo
+and run it on a synthetic calibration. Details in [`docs/DATA-POLICY.md`](docs/DATA-POLICY.md).
 
 ## Run it locally
 

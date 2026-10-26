@@ -13,6 +13,11 @@ HomePlan, ArreglaTodo's project for the Meta Global AI Developer Hackathon (Oct 
 
 - **The repo is public.** No customer or provider data, no real prices or commission rules, no
   keys. Demo data is synthetic.
+- **HomePlan is a spin-off of ArreglaTodo; its data stays private.** Read `docs/DATA-POLICY.md`
+  before touching anything that reads ArreglaTodo's databases. Code is public, data and the
+  estimator's calibration are private and live in HomePlan's private Supabase (RLS on). Never
+  commit rows, exports or anything derived row by row, even anonymized, and never "solve" it by
+  committing an encrypted file. Text from ArreglaTodo goes to a model only after redaction.
 - **Only work done during the hackathon counts, and it must be identifiable.** Never copy code
   from ArreglaTodo's private repos (CRM, quoting tool) into this one; rewrite what's needed.
 - Submission: 3-minute demo video, public repo, live product, by Nov 4, 9:00 PM ET.
