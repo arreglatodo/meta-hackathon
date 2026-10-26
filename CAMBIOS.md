@@ -14,7 +14,7 @@ que se pueda identificar).
 
 ## 2026-10-26 11:49 · Base del proyecto: Next.js, cliente de Meta y simulador de chat
 
-**Commit**: `HASH_BASE`
+**Commit**: `603acb8`
 
 Antes el repo tenía solo un README de una línea. Ahora tiene la base de HomePlan andando
 contra la API de Meta: una página que simula el chat de WhatsApp, el agente respondiendo con
