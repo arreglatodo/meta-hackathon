@@ -12,9 +12,40 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 13:10 · Se reescribió la historia de la rama para borrar cifras exactas
+
+**Commit**: no aplica; es una reescritura de la historia de la rama. Esta entrada va en el
+commit que corrige las referencias.
+
+Antes, dos commits de la rama tenían las cifras exactas de la historia de ArreglaTodo
+(cuántas solicitudes y cotizaciones de limpieza hay), aunque los documentos ya estaban
+redondeados: el repo es público y cualquiera podía verlas mirando commits viejos. Máximo pidió
+borrarlas. Ahora esos commits dicen "más de mil" desde el principio, y ninguna versión de la
+rama tiene las cifras.
+
+### Qué cambió
+- Se reescribieron los 4 últimos commits de la rama. Los anteriores no cambian.
+- Cambiaron los identificadores de esos commits; `CAMBIOS.md` y los mensajes de commit ya
+  apuntan a los nuevos:
+
+  | Antes | Ahora | Qué es |
+  |---|---|---|
+  | `c2c6e90` | `1bb3c5a` | Política de datos |
+  | `c03b956` | `360f698` | Su entrada en `CAMBIOS.md` |
+  | `f8b18f0` | `d245338` | Calibración de horas |
+  | `cfcf843` | `f4138d7` | Su entrada en `CAMBIOS.md` |
+
+- La rama se subió de nuevo forzando el reemplazo (`--force-with-lease`). Nadie más trabajaba
+  sobre ella y `main` no la tenía.
+
+**Pendiente**:
+- GitHub puede seguir mostrando un tiempo los commits viejos a quien tenga el link exacto de cada
+  uno. Para borrarlos del todo hay que pedírselo al soporte de GitHub. Son solo conteos, sin
+  datos de clientes.
+
 ## 2026-10-26 13:02 · Calibración de horas con la historia de ArreglaTodo, sin sacarla de su base
 
-**Commit**: `f8b18f0`
+**Commit**: `d245338`
 
 Antes no había estimador de horas, y la política de datos explicaba la idea pero no cómo se
 hacía. Ahora la calibración existe y la data de ArreglaTodo no salió de su base: la consulta
@@ -52,8 +83,6 @@ con o sin aspiradora).
 - `calibration/hours.sql`, `docs/DATA-POLICY.md`, `docs/probes/2026-10-26-hours-calibration.md`.
 
 **Pendiente**:
-- **La historia de git sigue teniendo las cifras exactas** de los commits `c2c6e90` y su
-  entrada. El repo es público: si hay que borrarlas, hay que reescribir la historia de la rama.
 - Siguiente calibración: horas de los trabajos que **funcionaron** (el cliente volvió o renovó),
   no de las reservadas.
 - Pasar la calibración a la app: rango de horas por tipo de casa, ajustado con lo que muestra el
@@ -61,7 +90,7 @@ con o sin aspiradora).
 
 ## 2026-10-26 12:55 · Política de datos: el código es público, la data de ArreglaTodo no
 
-**Commit**: `c2c6e90`
+**Commit**: `1bb3c5a`
 
 Antes el repo decía que no tenía datos reales, pero no explicaba cómo se iba a usar la historia
 de ArreglaTodo para estimar las horas sin hacerla pública. Ahora hay una política escrita, para
@@ -85,8 +114,7 @@ pasa por ArreglaTodo es información privilegiada.
   2. Esos datos se guardan en el Supabase privado de HomePlan.
   3. El estimador se calibra ahí, y la app carga la calibración solo del lado del servidor.
 - **Cuánta data hay**: más de mil trabajos de limpieza describen la casa y las horas (consulta
-  de solo conteos sobre `arreglatodo-db`, 26/10). *Corregido el 26/10 a las 13:10*: esta
-  entrada daba las cifras exactas, y Máximo pidió redondearlas porque el repo es público.
+  de solo conteos sobre `arreglatodo-db`, 26/10).
 - `README.md` (sección "Data and privacy") y `CLAUDE.md` (regla para cualquier agente) apuntan a
   la política.
 
