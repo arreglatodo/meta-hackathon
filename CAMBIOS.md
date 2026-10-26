@@ -12,6 +12,53 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 13:02 · Calibración de horas con la historia de ArreglaTodo, sin sacarla de su base
+
+**Commit**: `f8b18f0`
+
+Antes no había estimador de horas, y la política de datos explicaba la idea pero no cómo se
+hacía. Ahora la calibración existe y la data de ArreglaTodo no salió de su base: la consulta
+corre de solo lectura adentro y devuelve únicamente agregados. Lo pidió Máximo: usar la data de
+horas sin que quede pública, y solo datos cualitativos (ambientes, horas, con o sin productos,
+con o sin aspiradora).
+
+### Qué cambió
+- **`calibration/hours.sql`** (el código es público; los datos no salen):
+  - Saca de cada trabajo de limpieza dormitorios, baños, ambientes, horas, productos y
+    aspiradora, con reglas de texto que corren adentro de la base.
+  - Agrupa por tipo de casa y devuelve, por grupo, las horas típicas y el rango. Solo de grupos
+    de 20 trabajos o más, para que ningún número se pueda atar a un cliente.
+  - Aparta 1 de cada 5 trabajos para medir el error de verdad.
+- **No se le mandó texto de clientes a ningún modelo.** Las reglas alcanzaron; no hizo falta
+  usar la API de Meta para esto.
+- **La calibración quedó en el Supabase privado de HomePlan**, en un esquema que la API no
+  expone (`private.estimator_calibration`, con RLS). No está en el repo.
+- **`docs/DATA-POLICY.md`**: explica el circuito real y, en una tabla, quién ve qué (cliente,
+  jurado, servidor de HomePlan, base de ArreglaTodo). Dice además que cualquier otra empresa
+  podría correr la misma consulta sobre su propia base sin que ninguna vea la data de la otra.
+- **Cifras redondeadas** a "más de mil trabajos" en todos los documentos públicos, incluida la
+  entrada de abajo.
+
+### El resultado, sin maquillaje
+- **La historia casi no predice las horas.** El error promedio es de alrededor de una hora, y
+  apenas ~5 % mejor que decirle "4 horas" a todo el mundo.
+- Casi todos los tipos de casa dan 4 horas: lo que crece con la casa es el techo del rango, no
+  lo típico. Productos y aspiradora no cambian las horas.
+- La lectura: el cliente elige las horas (3 o 4, muchas veces el mínimo) antes de que nadie vea
+  la casa. **La historia mide lo que se reserva, no lo que la casa necesita**, y el video es
+  justo lo que falta. Está escrito en `docs/probes/2026-10-26-hours-calibration.md`.
+
+### Archivos clave
+- `calibration/hours.sql`, `docs/DATA-POLICY.md`, `docs/probes/2026-10-26-hours-calibration.md`.
+
+**Pendiente**:
+- **La historia de git sigue teniendo las cifras exactas** de los commits `c2c6e90` y su
+  entrada. El repo es público: si hay que borrarlas, hay que reescribir la historia de la rama.
+- Siguiente calibración: horas de los trabajos que **funcionaron** (el cliente volvió o renovó),
+  no de las reservadas.
+- Pasar la calibración a la app: rango de horas por tipo de casa, ajustado con lo que muestra el
+  video.
+
 ## 2026-10-26 12:55 · Política de datos: el código es público, la data de ArreglaTodo no
 
 **Commit**: `c2c6e90`
