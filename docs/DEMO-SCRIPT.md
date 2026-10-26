@@ -27,7 +27,8 @@ Accept?"* — and a thumb taps **Accept**.
 > "I walked through my apartment wearing my glasses. One minute later, I had a weekly cleaning
 > plan. On WhatsApp."
 
-**Status.** Glasses footage: recorded (probe 1). WhatsApp plan message: to build.
+**Status.** Glasses footage: recorded (probe 1). Plan message: done on the web page; on WhatsApp:
+to build.
 
 ## 0:07–0:25 · The problem
 
@@ -55,8 +56,9 @@ the price. Customer sends a voice note ("I have two dogs") and the plan adjusts.
 > don't come from the model's imagination: they come from more than a thousand real jobs. You
 > answer by voice, the plan adjusts, and you accept. No visit. No app."
 
-**Status.** Inventory and SAM probes done; blur done as a script. In the chat flow: to build.
-Voice notes (Muse Voice Transcribe): to build.
+**Status.** Web flow done (Oct 26): video → inventory → hours → prices per option → booking
+message, ~13 s. SAM overlays in the flow: to build. Voice notes (Muse Voice Transcribe): to
+build. WhatsApp (Kapso): to build.
 
 ## 1:15–2:00 · Every visit, verified
 

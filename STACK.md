@@ -10,7 +10,8 @@ Chosen to ship in nine days with what the team already runs in production.
 | Data | A new Supabase project (Postgres + Storage for videos/photos), separate from production | The repo is public; nothing here may touch real data. |
 | Meta Model API client | OpenAI SDK pointed at `https://api.meta.ai/v1` | Model API is drop-in compatible; one client for every model. |
 | Agent | Our own tool-calling loop, no framework | Every model and tool call is recorded in a trace we can show and audit. |
-| Heavy video work | Modal functions, only if a step exceeds Vercel's function time limit | First thing measured with a real 60-second video. |
+| Video on the web | Frames sampled in the browser (1 every 2 s, 512 px), sent to Muse Spark as images | A phone video is ~10 MB and Vercel functions accept 4.5 MB; frames are ~0.5 MB, and the video never leaves the phone. WhatsApp videos go server to server, whole. |
+| Heavy video work | Modal functions, only if a step exceeds Vercel's function time limit | Measured: Muse Spark on 31 frames takes ~13 s; SAM 3.1 on the full video ~32 s in chunks. Both fit. |
 
 ## Models
 

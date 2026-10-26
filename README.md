@@ -82,7 +82,7 @@ and run it on a synthetic calibration. Details in [`docs/DATA-POLICY.md`](docs/D
 pnpm install
 cp .env.example .env.local   # add your MODEL_API_KEY
 pnpm smoke                   # checks Meta Model API access
-pnpm dev                     # http://localhost:3000
+pnpm dev                     # http://localhost:3000 (quote flow), /chat (agent chat)
 ```
 
 Checks: `pnpm typecheck` and `pnpm lint`.
