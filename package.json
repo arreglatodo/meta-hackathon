@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "smoke": "NODE_USE_ENV_PROXY=1 node scripts/smoke.mjs"
+    "smoke": "NODE_USE_ENV_PROXY=1 node scripts/smoke.mjs",
+    "probe:sam": "NODE_USE_ENV_PROXY=1 node scripts/probe-sam.mjs",
+    "probe:spark": "NODE_USE_ENV_PROXY=1 node scripts/probe-spark-video.mjs"
   },
   "dependencies": {
     "next": "15.5.28",
