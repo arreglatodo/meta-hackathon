@@ -12,6 +12,46 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 12:55 · Política de datos: el código es público, la data de ArreglaTodo no
+
+**Commit**: `c2c6e90`
+
+Antes el repo decía que no tenía datos reales, pero no explicaba cómo se iba a usar la historia
+de ArreglaTodo para estimar las horas sin hacerla pública. Ahora hay una política escrita, para
+el equipo y para los jurados. Lo pidió Máximo: HomePlan es un spin-off de ArreglaTodo, y lo que
+pasa por ArreglaTodo es información privilegiada.
+
+### Qué cambió
+- **`docs/DATA-POLICY.md`**:
+  - Es público el código, la forma del estimador (qué datos usa y cómo los combina), una
+    calibración de ejemplo para que cualquiera pueda correrlo, y resultados agregados (cuántos
+    ejemplos y cuánto se equivoca en horas).
+  - Es privado todo lo de ArreglaTodo: solicitudes, cotizaciones, trabajos, chats, precios y la
+    calibración real que sale de esa historia.
+  - Es como un modelo de código abierto con pesos privados.
+- **No se cifra nada dentro del repo.** Un archivo cifrado en un repo público queda público para
+  siempre si se filtra la clave, y no se borra de la historia de git. Lo privado vive afuera, en
+  el Supabase privado de HomePlan.
+- **El circuito del estimador:**
+  1. Un script lee ArreglaTodo solo con permiso de lectura y se queda con datos que no
+     identifican a nadie: ambientes, baños, frecuencia, extras y horas cotizadas.
+  2. Esos datos se guardan en el Supabase privado de HomePlan.
+  3. El estimador se calibra ahí, y la app carga la calibración solo del lado del servidor.
+- **Cuánta data hay**: más de mil trabajos de limpieza describen la casa y las horas (consulta
+  de solo conteos sobre `arreglatodo-db`, 26/10).
+- `README.md` (sección "Data and privacy") y `CLAUDE.md` (regla para cualquier agente) apuntan a
+  la política.
+
+### Archivos clave
+- `docs/DATA-POLICY.md`, `README.md`, `CLAUDE.md`.
+
+**Pendiente**:
+- La política dice que ArreglaTodo autoriza el uso de su historia: conviene que quede firmado
+  por los dos socios (Máximo y Lorenzo), aunque sea un mail.
+- Decidir si se puede mostrar en público cuántos trabajos hay detrás del estimador (hoy la
+  política da números aproximados).
+- Armar el script de extracción y la calibración.
+
 ## 2026-10-26 12:47 · Borroneo automático de personas en los videos, con SAM 3.1
 
 **Commit**: `bc2d421`
