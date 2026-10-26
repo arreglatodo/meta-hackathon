@@ -12,6 +12,34 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 18:26 · El chat ya deja mandar el video y cotiza ahí mismo
+
+**Commit**: `bb30aa9`
+
+Antes, el chat le pedía al cliente un video recorriendo la casa, pero no había forma de
+mandarlo. Máximo lo probó en producción y el agente terminó contestando que no sabía por qué. Ahora
+el chat tiene un botón con un clip (📎) al lado de donde se escribe, y el video se cotiza en la
+misma conversación.
+
+### Qué cambió
+- **El clip manda el video.** El chat toma los cuadros en el navegador (igual que la página
+  principal) y muestra el primer cuadro como la burbuja del video.
+- **La zona y la frecuencia salen de la conversación**: si el cliente nombró Ciudad de la Costa
+  o un barrio de ahí (Lagomar, Solymar, El Pinar…), se cotiza con esa zona; si dijo "cada 2
+  semanas" o "una vez", el botón de reserva lo lleva.
+- **La cotización llega como un mensaje del agente**, con un botón "Reservar" por opción que
+  abre el WhatsApp de clientes de ArreglaTodo con todo escrito.
+- **El agente sabe cómo se manda el video** y, cuando ya hay cotización, responde con esos
+  mismos números, nunca otros.
+- Probado de punta a punta en el navegador: "vivo en Lagomar, cada 2 semanas" → cómo mando el
+  video → el video → cotización en Ciudad de la Costa en 16 s → "si no tengo productos, ¿cuánto
+  sale?" → "$4.250, 4 horas" (la opción con productos incluidos, que es la correcta).
+
+### Archivos clave
+- `src/components/ChatSimulator.tsx`, `src/components/quote-ui.tsx`, `src/lib/agent/prompt.ts`.
+
+**Pendiente**: lo mismo en WhatsApp de verdad (Kapso).
+
 ## 2026-10-26 18:21 · El muestreo de cuadros del video pasa a un módulo compartido
 
 **Commit**: `a47cf79`
