@@ -12,6 +12,42 @@ que se pueda identificar).
 
 ---
 
+## 2026-10-26 13:30 · Guión del video y declaración de lo hecho antes del kickoff
+
+**Commit**: `1b6e9a8`
+
+Antes no había guión del video de 3 minutos, y el README decía que todo el repo se había
+escrito durante la hackathon. No era exacto: el kickoff fue a las 12:00 hora del Este (13:00 en
+Uruguay), y la base, las pruebas con el video, el borroneo y la política de datos se hicieron
+esa mañana. Ahora eso está declarado como trabajo previo, y hay un guión que se va a ir
+actualizando a medida que se construye el producto.
+
+### Qué cambió
+- **Etiqueta `pre-kickoff`** en el commit `360f698`, el último anterior al kickoff. El README
+  lo dice, en su texto y en la tabla de "qué existía antes": todo lo posterior a la etiqueta es
+  trabajo del evento. **No se cambiaron fechas de commits ni se volvió a subir nada como
+  nuevo**: hubiera sido presentar como hecho en el evento algo hecho antes, y las reglas
+  descalifican por eso.
+- **`docs/DEMO-SCRIPT.md`**: el guión, en inglés para grabarlo con la voz de Máximo.
+  - Gancho de 7 segundos: la vista desde los lentes Meta Ray-Ban recorriendo la casa y, al
+    segundo 4, el plan semanal que llega por WhatsApp y se acepta.
+  - Problema, demo del video al plan, verificación de cada visita, cómo funciona por dentro,
+    impacto y cierre ("Show us your home once. We'll prove every visit.").
+  - Cada bloque dice qué se ve, qué se dice y si eso ya existe o falta construirlo.
+  - La idea central: la IA no es el diferencial (la usan todos); lo es el circuito, en el que el
+    video que cotiza es la referencia contra la que se verifica cada visita.
+  - Consejos para grabar la voz limpia y la lista de tomas que hay que juntar.
+- **`CLAUDE.md`**: dos reglas nuevas. Nunca cambiar fechas ni volver a subir trabajo viejo como
+  nuevo. El guión guía lo que se construye y se actualiza cuando entra cada función.
+
+### Archivos clave
+- `docs/DEMO-SCRIPT.md`, `README.md`, `CLAUDE.md`.
+
+**Pendiente**:
+- Grabar otro recorrido con los lentes, sin personas, para el gancho.
+- Las tomas del prestador con los lentes (antes y después del mismo baño, cocina y vidrio).
+- La voz se graba al final, cuando las tomas del producto estén cerradas.
+
 ## 2026-10-26 13:10 · Se reescribió la historia de la rama para borrar cifras exactas
 
 **Commit**: no aplica; es una reescritura de la historia de la rama. Esta entrada va en el
